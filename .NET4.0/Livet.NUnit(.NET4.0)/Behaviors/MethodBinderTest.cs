@@ -51,12 +51,12 @@ namespace Livet.NUnit.Behaviors
             string test2Argument = null;
             var testObject = new TestViewModel(0, () => { }, s => { test2CalledCount++; test2Argument = s; });
 
-            var binder = new MethodBinderWithArgument();
+            var binder = new MethodBinderWithArguments();
 
-            binder.Invoke((object)testObject, "Test2","a");
+            binder.Invoke((object)testObject, "Test2", new object[] { "a" });
             test2CalledCount.Is(1);
             test2Argument.Is("a");
-            binder.Invoke((object)testObject, "Test2","b");
+            binder.Invoke((object)testObject, "Test2", new object[] { "b" });
             test2CalledCount.Is(2);
             test2Argument.Is("b");
 
@@ -65,21 +65,21 @@ namespace Livet.NUnit.Behaviors
             //キャッシュが更新されないか目視
             testObject = new TestViewModel(0, () => { }, s => { test2CalledCount++; test2Argument = s; });
 
-            binder.Invoke((object)testObject, "Test2", "a");
+            binder.Invoke((object)testObject, "Test2",  new object[] { "a" });
             test2CalledCount.Is(3);
             test2Argument.Is("a");
-            binder.Invoke((object)testObject, "Test2", "b");
+            binder.Invoke((object)testObject, "Test2",  new object[] { "b" });
             test2CalledCount.Is(4);
             test2Argument.Is("b");
 
             //System.Threading.Thread.Sleep(3000);
 
             //キャッシュ辞書からメソッドキャッシュを取得するか目視
-            binder = new MethodBinderWithArgument();
-            binder.Invoke((object)testObject, "Test2", "a");
+            binder = new MethodBinderWithArguments();
+            binder.Invoke((object)testObject, "Test2",  new object[] { "a" });
             test2CalledCount.Is(5);
             test2Argument.Is("a");
-            binder.Invoke((object)testObject, "Test2", "b");
+            binder.Invoke((object)testObject, "Test2",  new object[] { "b" });
             test2CalledCount.Is(6);
             test2Argument.Is("b");
         }

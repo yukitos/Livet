@@ -10,7 +10,7 @@ namespace Livet.Behaviors.Messaging
     [System.Windows.Markup.ContentProperty("Message")]
     public class DirectInteractionMessage : Freezable
     {
-        private MethodBinderWithArgument _callbackMethod = new MethodBinderWithArgument();
+        private MethodBinderWithArguments _callbackMethod = new MethodBinderWithArguments();
 
         /// <summary>
         /// 相互作用メッセージ(各種InteractionMessage)を指定、または取得します。
@@ -78,7 +78,7 @@ namespace Livet.Behaviors.Messaging
             }
             if (CallbackMethodTarget != null && CallbackMethodName != null)
             {
-                _callbackMethod.Invoke(CallbackMethodTarget, CallbackMethodName, message);
+                _callbackMethod.Invoke(CallbackMethodTarget, CallbackMethodName, new object[] { message });
             }
         }
 

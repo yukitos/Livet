@@ -1,5 +1,6 @@
 ﻿using System.Windows.Interactivity;
 using System.Windows;
+using System.Collections.Generic;
 
 namespace Livet.Behaviors
 {
@@ -9,7 +10,7 @@ namespace Livet.Behaviors
     public class LivetCallMethodAction : TriggerAction<DependencyObject>
     {
         private MethodBinder _method = new MethodBinder();
-        private MethodBinderWithArgument _callbackMethod = new MethodBinderWithArgument();
+        private MethodBinderWithArguments _callbackMethod = new MethodBinderWithArguments();
 
         private bool _parameterSet;
 
@@ -60,6 +61,30 @@ namespace Livet.Behaviors
             thisReference._parameterSet = true;
         }
 
+        private static readonly DependencyPropertyKey MethodParametersPropertyKey =
+            DependencyProperty.RegisterReadOnly(
+                "MethodParameters",
+                typeof(List<object>),
+                typeof(LivetCallMethodAction),
+                new FrameworkPropertyMetadata(new List<object>(), OnMethodParametersChanged));
+        public static readonly DependencyProperty MethodParametersProperty =
+            MethodParametersPropertyKey.DependencyProperty;
+
+        /// <summary>
+        /// 呼び出すメソッドに渡す引数を指定、または取得します。
+        /// </summary>
+        public List<object> MethodParameters
+        {
+            get { return (List<object>)GetValue(MethodParametersProperty); }
+            set { SetValue(MethodParametersProperty, value); }
+        }
+
+        private static void OnMethodParametersChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            var thisReference = (LivetCallMethodAction)sender;
+            thisReference._parameterSet = true;
+        }
+
         protected override void Invoke(object parameter)
         {
             if(MethodTarget == null) return;
@@ -71,7 +96,14 @@ namespace Livet.Behaviors
             }
             else
             {
-                _callbackMethod.Invoke(MethodTarget, MethodName, MethodParameter);
+                if (MethodParameters != null && MethodParameters.Count > 0)
+                {
+                    _callbackMethod.Invoke(MethodTarget, MethodName, MethodParameters.ToArray());
+                }
+                else
+                {
+                    _callbackMethod.Invoke(MethodTarget, MethodName, new object[] { MethodParameter });
+                }
             }
         }
     }

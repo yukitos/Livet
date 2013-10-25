@@ -488,8 +488,8 @@
     <Compile Include="..\..\.NET4.0\Livet%28.NET4.0%29\Behaviors\MethodBinder.cs">
       <Link>Behaviors\MethodBinder.cs</Link>
     </Compile>
-    <Compile Include="..\..\.NET4.0\Livet%28.NET4.0%29\Behaviors\MethodBinderWithArgument.cs">
-      <Link>Behaviors\MethodBinderWithArgument.cs</Link>
+    <Compile Include="..\..\.NET4.0\Livet%28.NET4.0%29\Behaviors\MethodBinderWithArguments.cs">
+      <Link>Behaviors\MethodBinderWithArguments.cs</Link>
     </Compile>
     <Compile Include="..\..\.NET4.0\Livet%28.NET4.0%29\Behaviors\RoutedEventTrigger.cs">
       <Link>Behaviors\RoutedEventTrigger.cs</Link>
