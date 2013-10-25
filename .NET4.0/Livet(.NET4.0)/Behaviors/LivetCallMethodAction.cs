@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Livet.Behaviors
 {
     /// <summary>
-    /// 引数を一つだけ持つメソッドに対応したCallMethodActionです。
+    /// 複数の引数を取るメソッドに対応したCallMethodActionです。
     /// </summary>
     public class LivetCallMethodAction : TriggerAction<DependencyObject>
     {
